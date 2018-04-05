@@ -3,5 +3,9 @@
 	<persistence-unit name="TaskList">
 		<class>model.Task</class>
 		<class>model.User</class>
+		<properties>
+		<property name="hibernate.connection.useUnicode" value="true" />
+		<property name="hibernate.connection.characterEncoding" value="UTF-8" />
+		</properties>
 	</persistence-unit>
 </persistence>

@@ -35,7 +35,7 @@ public class Task implements Serializable {
 	private Date taskStartDate;
 
 	@Column(name="task_status")
-	private byte taskStatus;
+	private int taskStatus;
 
 	@Column(name="task_user_id")
 	private int taskUserId;
@@ -83,11 +83,11 @@ public class Task implements Serializable {
 		this.taskStartDate = taskStartDate;
 	}
 
-	public byte getTaskStatus() {
+	public int getTaskStatus() {
 		return this.taskStatus;
 	}
 
-	public void setTaskStatus(byte taskStatus) {
+	public void setTaskStatus(int taskStatus) {
 		this.taskStatus = taskStatus;
 	}
 

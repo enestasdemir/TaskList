@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>User Login</title>
+<title>User Register</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -23,35 +23,43 @@
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
 </head>
-<body style="background-color:#d9dddd">
+<body style="background-color: #d9dddd">
 	<div class="container">
-	<c:import url="/navbar"></c:import>
 		<div class="row">
-		<div class="col-sm-4"></div>
-			<div class="col-sm-4" align="center" style="margin-top: 50px">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4" align="center" style="margin-top: 5%">
 				<div class="card" style="width: 18rem;">
 					<div class="card-body" align="left">
-						<h5 class="card-title">User Login</h5>
-						<form action='<s:url value="/login"></s:url>' method="post">
+						<h5 class="card-title">Task Add</h5>
+						<form action='<s:url value="/addtask"></s:url>' method="post">
 							<div class="form-group">
-								<label for="user_mail">User Email</label> <input
-									type="email" class="form-control" id="user_mail" name="userMail"
-									placeholder="Enter email">
+								<label for="taskName">Task Name</label> <input type="text"
+									class="form-control" id="taskName" name="taskName"
+									placeholder="Task Name">
 							</div>
 							<div class="form-group">
-								<label for="user_password">Password</label> <input
-									type="password" class="form-control" id="user_password" name="userPassword"
-									placeholder="Password">
+								<label for="taskDescription">Task Description</label> <input
+									type="text" class="form-control" id="taskDescription"
+									name="taskDescription" placeholder="Task Description">
 							</div>
-							<button type="submit" class="btn btn-primary">Login</button>
+
+							<div class="form-group">
+								<label for="taskStartDate">Task Start Date</label> <input
+									type="text" class="form-control" id="taskStartDate"
+									name="taskStartDate" placeholder="Task Start Date">
+							</div>
+							<div class="form-group">
+								<label for="taskDueDate">Task Due Date</label> <input
+									type="text" class="form-control" id="taskDueDate"
+									name="taskDueDate" placeholder="Task Due Date">
+							</div>
+							<button type="submit" class="btn btn-primary">Add</button>
 						</form>
 					</div>
-				</div><div style="margin-top: 20px">
-				<a href='<s:url value="/register"></s:url>'>Create a New Account</a>
+				</div>
+				<div class="col-sm-4"></div>
 			</div>
-			<div class="col-sm-4"></div>
 		</div>
-	</div>
 	</div>
 </body>
 </html>

@@ -21,28 +21,31 @@ public class HomeController {
 	public String home(Model model) {
 		return "home";
 	}
-	
+
+	// Login action
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(User user, HttpServletRequest req) {
 		User usr = null;
 		Session sesi = sf.openSession();
 
 		try {
-			usr = (User) sesi.createQuery("from User where user_mail = '"+user.getUserMail()+"' and user_password = '" + user.getUserPassword() + "'").list().get(0);
-			
+			usr = (User) sesi.createQuery("from User where user_mail = '" + user.getUserMail()
+					+ "' and user_password = '" + user.getUserPassword() + "'").list().get(0);
+
 		} catch (Exception e) {
-			System.err.println("data getirme hatasý : " + e);
+			System.err.println("Database error: " + e);
 		}
 		sesi.close();
-		
+
+		// Login check
 		if (usr != null) {
 			req.getSession().setAttribute("id", usr.getUserId());
 			req.getSession().setAttribute("user", usr);
-			
+
 			return "redirect:/tasklist";
 		} else {
-			req.getSession().setAttribute("hata", "Kullanýcý adý yada þifre hatalý");
-			return "redirect:/home";
+			req.getSession().setAttribute("error", "User mail or password is not valid!");
+			return "redirect:/";
 		}
 	}
 }

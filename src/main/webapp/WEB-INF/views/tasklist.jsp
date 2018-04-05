@@ -78,8 +78,7 @@
 				</div>
 
 				<c:if test="${ empty ls }">
-					<div style="text-align: center; padding: 10px;">Burada Data
-						Yok !</div>
+					<div style="text-align: center; padding: 10px;">There is no data!</div>
 				</c:if>
 			</div>
 			<!-- /.box -->

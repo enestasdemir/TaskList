@@ -34,7 +34,7 @@ public class User implements Serializable {
 	private Date userRegisterDate;
 
 	@Column(name="user_role")
-	private byte userRole;
+	private int userRole;
 
 	@Column(name="user_surname")
 	private String userSurname;
@@ -82,11 +82,11 @@ public class User implements Serializable {
 		this.userRegisterDate = userRegisterDate;
 	}
 
-	public byte getUserRole() {
+	public int getUserRole() {
 		return this.userRole;
 	}
 
-	public void setUserRole(byte userRole) {
+	public void setUserRole(int userRole) {
 		this.userRole = userRole;
 	}
 
