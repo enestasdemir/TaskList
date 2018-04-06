@@ -25,13 +25,12 @@
 </head>
 <body style="background-color:#d9dddd">
 	<div class="container">
-	<c:import url="/navbar"></c:import>
 		<div class="row">
 		<div class="col-sm-4"></div>
-			<div class="col-sm-4" align="center" style="margin-top: 50px">
+			<div class="col-sm-4" align="center" style="margin-top: 25px">
 				<div class="card" style="width: 18rem;">
 					<div class="card-body" align="left">
-						<h5 class="card-title">User Login</h5>
+						<h5 class="card-title">Login</h5>
 						<form action='<s:url value="/login"></s:url>' method="post">
 							<div class="form-group">
 								<label for="user_mail">User Email</label> <input

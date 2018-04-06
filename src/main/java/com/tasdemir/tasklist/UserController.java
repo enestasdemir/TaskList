@@ -48,13 +48,13 @@ public class UserController {
 
 	// User register page
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String registerUserPage(HttpServletRequest req) {
+	public String userRegisterPage(HttpServletRequest req) {
 		return Utils.loginControl(req, "register", "redirect:/tasklist");
 	}
 
 	// User sign up action
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerUser(User user) {
+	public String userRegister(User user) {
 		Date date = new Date();
 		Session sesi = sf.openSession();
 		Transaction tr = sesi.beginTransaction();

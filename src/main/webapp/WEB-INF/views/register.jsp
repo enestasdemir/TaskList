@@ -26,10 +26,9 @@
 </head>
 <body style="background-color: #d9dddd">
 	<div class="container">
-		<c:import url="/navbar"></c:import>
 		<div class="row">
 			<div class="col-sm-3"></div>
-			<div class="col-sm-6" align="center" style="margin-top: 50px">
+			<div class="col-sm-6" align="center" style="margin-top: 25px">
 				<div class="card" style="width: 18rem;">
 					<div class="card-body" align="left">
 						<h5 class="card-title">Register</h5>

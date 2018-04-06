@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>User Register</title>
+<title>Add a Task</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -27,7 +27,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4"></div>
-			<div class="col-sm-4" align="center" style="margin-top: 5%">
+			<div class="col-sm-4" align="center" style="margin-top: 25px">
 				<div class="card" style="width: 18rem;">
 					<div class="card-body" align="left">
 						<h5 class="card-title">Task Add</h5>

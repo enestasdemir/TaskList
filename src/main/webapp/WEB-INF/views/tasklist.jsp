@@ -24,7 +24,6 @@
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="<s:url value="resources/js/functions.js"></s:url>"></script>
-</head>
 <title>List</title>
 </head>
 <body>
@@ -59,9 +58,14 @@
 										<td>${ item.getTaskDescription() }</td>
 										<td>${ item.getTaskStartDate()}</td>
 										<td>${ item.getTaskDueDate()}</td>
-										<td>${ item.getTaskStatus()}</td>
 										<td>
-											<button type="button" class="btn btn-primary btn-sm">Edit</button>
+										<c:if test="${ item.getTaskStatus() == 0}">Active</c:if>
+										<c:if test="${ item.getTaskStatus() == 1}">Postponed</c:if>
+										<c:if test="${ item.getTaskStatus() == 2}">Canceled</c:if>
+										<c:if test="${ item.getTaskStatus() == 3}">Finished</c:if>
+										</td>
+										<td>
+											<a class="btn btn-primary btn-sm" href='<s:url value="/taskedit/${ item.getTaskId() }"></s:url>' role="button">Edit</a>
 											<button
 												onclick="fncDelete(${ item.getTaskId() }, 'task_id','tasks')"
 												type="button" class="btn btn-danger btn-sm">Delete</button>
