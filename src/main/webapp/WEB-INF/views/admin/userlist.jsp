@@ -59,10 +59,9 @@
 										<td><c:if test="${ item.getUserRole() == 0}">Standart</c:if>
 											<c:if test="${ item.getUserRole() == 1}">Admin</c:if></td>
 										<td>
-											<button type="button" class="btn btn-primary btn-sm">Edit</button>
-											<button
-												onclick="fncDelete(${ item.getUserId() }, 'user_id','users')"
-												type="button" class="btn btn-danger btn-sm">Delete</button>
+										<a class="btn btn-primary btn-sm"
+											href='<s:url value="/admin/tasklist/${ item.getUserId() }"></s:url>'
+											role="button">Tasks</a>
 										</td>
 									</tr>
 								</c:forEach>
