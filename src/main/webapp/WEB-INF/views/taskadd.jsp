@@ -44,14 +44,14 @@
 							</div>
 
 							<div class="form-group">
-								<label for="taskStartDate">Task Start Date</label> <input
-									type="text" class="form-control" id="taskStartDate"
-									name="taskStartDate" placeholder="Task Start Date">
+								<label>Task Start Date</label> <input type="date"
+									name="startDate" max="2099-12-31" min="1900-01-01"
+									class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="taskDueDate">Task Due Date</label> <input
-									type="text" class="form-control" id="taskDueDate"
-									name="taskDueDate" placeholder="Task Due Date">
+								<label>Task Due Date</label> <input type="date"
+									name="dueDate" min="1900-01-01" max="2099-12-31"
+									class="form-control">
 							</div>
 							<button type="submit" class="btn btn-primary">Add</button>
 						</form>
@@ -61,5 +61,6 @@
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>

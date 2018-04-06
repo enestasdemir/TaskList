@@ -22,17 +22,21 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="<s:url value="resources/js/functions.js"></s:url>"></script>
 </head>
 <title>List</title>
 </head>
 <body>
-
 	<div class="container">
-
 		<div class="col-sm-12">
 			<div class="box">
 				<div class="box-header">
 					<h3 class="box-title">My Task List</h3>
+					<div align="right">
+						<a href='<s:url value="/taskadd"></s:url>'>New Task</a> <a
+							href='<s:url value="/logout"></s:url>'>Logout</a>
+					</div>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body table-responsive no-padding">
@@ -43,22 +47,24 @@
 								<th>Description</th>
 								<th>Start Date</th>
 								<th>Due Date</th>
+								<th>Status</th>
 								<th style="width: 130px;">Transactions</th>
 							</tr>
 
 							<c:if test="${ not empty ls }">
 
 								<c:forEach items="${ ls }" var="item">
-									<tr id="${ item.getTaskId() }" role="remove">
+									<tr id="${ item.getTaskId() }" role="delete">
 										<td>${ item.getTaskName() }</td>
 										<td>${ item.getTaskDescription() }</td>
 										<td>${ item.getTaskStartDate()}</td>
 										<td>${ item.getTaskDueDate()}</td>
+										<td>${ item.getTaskStatus()}</td>
 										<td>
-											<button
-												onclick="fncDelete(${ item.getTaskId() }, 'taskId' ,'tasklist')"
-												type="button" class="btn btn-danger btn-sm">Remove</button>
 											<button type="button" class="btn btn-primary btn-sm">Edit</button>
+											<button
+												onclick="fncDelete(${ item.getTaskId() }, 'task_id','tasks')"
+												type="button" class="btn btn-danger btn-sm">Delete</button>
 										</td>
 									</tr>
 								</c:forEach>
@@ -78,14 +84,12 @@
 				</div>
 
 				<c:if test="${ empty ls }">
-					<div style="text-align: center; padding: 10px;">There is no data!</div>
+					<div style="text-align: center; padding: 10px;">There is no
+						data!</div>
 				</c:if>
 			</div>
 			<!-- /.box -->
 		</div>
 	</div>
-
-	</div>
-
 </body>
 </html>
