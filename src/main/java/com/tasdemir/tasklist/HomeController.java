@@ -14,7 +14,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest req, Model model) {
-		// Check errors
+		// Check the errors
 		boolean error = req.getSession().getAttribute("error") != null;
 		if(error) {
 			String err =""+req.getSession().getAttribute("error");	// Convert error object to string

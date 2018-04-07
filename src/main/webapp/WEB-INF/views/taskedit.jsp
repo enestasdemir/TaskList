@@ -12,6 +12,7 @@
 </head>
 <body style="background-color: #d9dddd">
 	<div class="container">
+		<c:import url="/navbar"></c:import>
 		<div class="row">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-4" align="center" style="margin-top: 25px">
@@ -44,12 +45,16 @@
 											value="${item.getTaskDueDate()}">
 									</div>
 									<div class="form-group">
-										<label for="taskStatus">Task Status</label>
-										<select class="form-control" id="taskStatus" name="taskStatus">
-											<option value="0" <c:if test="${item.getTaskStatus() == 0 }">selected</c:if>>Active</option>
-											<option value="1" <c:if test="${item.getTaskStatus() == 1 }">selected</c:if>>Postponed</option>
-											<option value="2" <c:if test="${item.getTaskStatus() == 2 }">selected</c:if>>Canceled</option>
-											<option value="3" <c:if test="${item.getTaskStatus() == 3 }">selected</c:if>>Finished</option>
+										<label for="taskStatus">Task Status</label> <select
+											class="form-control" id="taskStatus" name="taskStatus">
+											<option value="0"
+												<c:if test="${item.getTaskStatus() == 0 }">selected</c:if>>Active</option>
+											<option value="1"
+												<c:if test="${item.getTaskStatus() == 1 }">selected</c:if>>Postponed</option>
+											<option value="2"
+												<c:if test="${item.getTaskStatus() == 2 }">selected</c:if>>Canceled</option>
+											<option value="3"
+												<c:if test="${item.getTaskStatus() == 3 }">selected</c:if>>Finished</option>
 										</select>
 									</div>
 									<button type="submit" class="btn btn-primary">Update</button>

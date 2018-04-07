@@ -25,15 +25,16 @@ public class UserController {
 	// User sign in action
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(User user, HttpServletRequest req, Model model) {
-
+		// Check the required fields
 		if (user.getUserMail().equals("") || user.getUserPassword().equals("")) {
 			req.getSession().setAttribute("error", "Email or password can not be empty!");
 			return "redirect:/";
 		}
 
-		User usr = null;
+		User usr = null; // Create a user object for the session operations
 		Session sesi = sf.openSession();
 		try {
+			// Fill the user obj with attributes
 			usr = (User) sesi.createQuery("from User where user_mail = '" + user.getUserMail()
 					+ "' and user_password = '" + user.getUserPassword() + "'").list().get(0);
 		} catch (Exception e) {
@@ -41,10 +42,10 @@ public class UserController {
 		}
 		sesi.close();
 
-		// Login check
+		// Session creation
 		if (usr != null) {
-			req.getSession().setAttribute("id", usr.getUserId());
-			req.getSession().setAttribute("user", usr);
+			req.getSession().setAttribute("id", usr.getUserId()); // Set the user ID
+			req.getSession().setAttribute("user", usr); // Set the user attributes
 
 			return "redirect:/tasklist";
 		} else {
@@ -56,7 +57,7 @@ public class UserController {
 	// User register page
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String userRegisterPage(HttpServletRequest req, Model model) {
-		// Check errors
+		// Check the errors
 		boolean error = req.getSession().getAttribute("error") != null;
 		if (error) {
 			String err = "" + req.getSession().getAttribute("error"); // Convert error object to string
@@ -76,7 +77,7 @@ public class UserController {
 			req.getSession().setAttribute("error", "All fields are required!");
 			return "redirect:/register";
 		}
-		
+
 		// Check password matching
 		if (!user.getUserPassword().equals(conUserPassword)) {
 			req.getSession().setAttribute("error", "The passwords do not match!");

@@ -17,12 +17,13 @@ public class IncluderController {
 	// Navbar includer
 	@RequestMapping(value = "/navbar", method = RequestMethod.GET)
 	public String navbar(HttpServletRequest req, Model model) {
+		// Check the session
 		boolean log = req.getSession().getAttribute("id") != null;
 		if (log) {
-			User user = (User) req.getSession().getAttribute("user");
-			List<User> userarr = new ArrayList<User>();
-			userarr.add(user);
-			model.addAttribute("us", userarr);
+			User user = (User) req.getSession().getAttribute("user"); // Get user's attributes
+			List<User> userarr = new ArrayList<User>(); // Set the list for user
+			userarr.add(user); // Add the user to list
+			model.addAttribute("us", userarr); // Create a model for user list
 		}
 		return "inc/navbar";
 	}
@@ -32,7 +33,7 @@ public class IncluderController {
 	public String css() {
 		return "inc/css";
 	}
-	
+
 	// JS includer
 	@RequestMapping(value = "/js", method = RequestMethod.GET)
 	public String js() {

@@ -33,15 +33,17 @@ public class TaskController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/tasklist", method = RequestMethod.GET)
 	public String taskList(Model model, HttpServletRequest req) {
-		model.addAttribute("filter", 1);	// Filter dropdown menu activate
+		model.addAttribute("filter", 1); // Filter dropdown menu activate
+		// Check the session
 		boolean log = req.getSession().getAttribute("id") != null;
 		if (log) {
-			int id = (Integer) req.getSession().getAttribute("id"); // Standart user ID
+			int id = (Integer) req.getSession().getAttribute("id"); // Set the user ID
 			Session sesi = sf.openSession();
-			List<Task> taskarr = new ArrayList<Task>();
+			List<Task> taskarr = new ArrayList<Task>(); // Create a list for tasks
 			try {
-				taskarr = sesi.createQuery("from Task where task_user_id = '" + id + "'").list(); // List filling
-				model.addAttribute("ls", taskarr);
+				// Fill the task list with tasks
+				taskarr = sesi.createQuery("from Task where task_user_id = '" + id + "'").list();
+				model.addAttribute("ls", taskarr); // Create a model for the task list
 			} catch (Exception e) {
 				System.err.println("Databse error: " + e);
 			}
@@ -62,7 +64,7 @@ public class TaskController {
 			model.addAttribute("error", err); // Set error model
 			req.getSession().removeAttribute("error"); // Clear error object
 		}
-		
+
 		return Utils.loginControl(req, "redirect:/", "taskadd");
 	}
 
@@ -76,7 +78,8 @@ public class TaskController {
 			req.getSession().setAttribute("error", "All fields are required!");
 			return "redirect:/taskadd";
 		}
-		
+
+		// Check the sessions
 		boolean log = req.getSession().getAttribute("id") != null;
 		if (log) {
 			int id = (Integer) req.getSession().getAttribute("id"); // Standart user ID
@@ -115,15 +118,17 @@ public class TaskController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/taskedit/{id}", method = RequestMethod.GET)
 	public String taskEditPage(@PathVariable Integer id, Model model, HttpServletRequest req) {
-		tid = id;
-		User user = (User) req.getSession().getAttribute("user");
+		tid = id; // Set task ID for update operations
+		User user = (User) req.getSession().getAttribute("user"); // Get the user's attributes
 
 		Session sesi = sf.openSession();
+		// Create a list and fill it with the task
 		List<Task> ls = sesi.createQuery("from Task where taskId = '" + id + "' ").setMaxResults(1).list();
+		// Check the user's ID for validation
 		if (ls.get(0).getTaskUserId() != user.getUserId()) {
 			model.addAttribute("error", "User is not validated!");
 		} else {
-			model.addAttribute("ls", ls);
+			model.addAttribute("ls", ls); // Create a model for the task
 			sesi.close();
 		}
 		return Utils.loginControl(req, "redirect:/", "taskedit");
@@ -133,6 +138,14 @@ public class TaskController {
 	@RequestMapping(value = "/updatetask", method = RequestMethod.POST)
 	public String updateTask(Task task, HttpServletRequest req, @RequestParam String startDate,
 			@RequestParam String dueDate) {
+		// Check required fields
+		if (task.getTaskName().equals("") || task.getTaskDescription().equals("") || startDate.equals("")
+				|| dueDate.equals("")) {
+			req.getSession().setAttribute("error", "All fields are required!");
+			return "redirect:/taskedit/" + tid;
+		}
+
+		// Check the session
 		boolean log = req.getSession().getAttribute("id") != null;
 		if (log) {
 			int id = (Integer) req.getSession().getAttribute("id"); // Standart user ID
@@ -151,11 +164,11 @@ public class TaskController {
 			// New task creating
 			Session sesi = sf.openSession();
 			Transaction tr = sesi.beginTransaction();
-			task.setTaskId(tid); // Set task id
-			task.setTaskUserId(id); // Set task user id
-			task.setTaskStartDate(sd); // Set task start date
-			task.setTaskDueDate(dd); // Set task due date
-			sesi.update(task); // Update task
+			task.setTaskId(tid); // Set the task id
+			task.setTaskUserId(id); // Set the task user ID
+			task.setTaskStartDate(sd); // Set the task start date
+			task.setTaskDueDate(dd); // Set the task due date
+			sesi.update(task); // Update the task
 			tr.commit();
 			sesi.close();
 
@@ -172,6 +185,7 @@ public class TaskController {
 		try {
 			Session sesi = sf.openSession();
 			Transaction tr = sesi.beginTransaction();
+			// Delete operation
 			String q = "delete from " + tableName + " where " + idName + " = " + id;
 			sesi.createNativeQuery(q).executeUpdate();
 			tr.commit();
@@ -182,20 +196,23 @@ public class TaskController {
 		}
 	}
 
+	// Task filtering
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/tasklist/{fid}", method = RequestMethod.GET)
 	public String taskFilter(@PathVariable Integer fid, HttpServletRequest req, Model model) {
-		model.addAttribute("filter", 1);	// Filter dropdown menu activate
+		model.addAttribute("filter", 1); // Filter dropdown menu activate
+		// Check the session
 		boolean log = req.getSession().getAttribute("id") != null;
 		if (log) {
-			int id = (Integer) req.getSession().getAttribute("id"); // Standart user ID
+			int id = (Integer) req.getSession().getAttribute("id"); // Get the user's ID
 			Session sesi = sf.openSession();
-			List<Task> ftaskarr = new ArrayList<Task>();
+			List<Task> ftaskarr = new ArrayList<Task>(); // Create a list for the filtered tasks
 			try {
+				// Fill the list with the filtered tasks
 				ftaskarr = sesi
 						.createQuery("from Task where task_user_id = '" + id + "' and task_status = '" + fid + "'")
-						.list(); // List filling
-				model.addAttribute("ls", ftaskarr);
+						.list();
+				model.addAttribute("ls", ftaskarr); // Create a model for the list
 			} catch (Exception e) {
 				System.err.println("Databse error: " + e);
 			}
