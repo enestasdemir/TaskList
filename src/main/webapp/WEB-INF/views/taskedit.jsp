@@ -7,21 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Task Edit</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	crossorigin="anonymous"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	crossorigin="anonymous"></script>
+<c:import url="/css"></c:import>
+<c:import url="/js"></c:import>
 </head>
 <body style="background-color: #d9dddd">
 	<div class="container">
@@ -58,8 +45,7 @@
 									</div>
 									<div class="form-group">
 										<label for="taskStatus">Task Status</label>
-										<select class="form-control" id="taskStatus" name="taskStatus"
-										value="${item.getTaskStatus()}">
+										<select class="form-control" id="taskStatus" name="taskStatus">
 											<option value="0" <c:if test="${item.getTaskStatus() == 0 }">selected</c:if>>Active</option>
 											<option value="1" <c:if test="${item.getTaskStatus() == 1 }">selected</c:if>>Postponed</option>
 											<option value="2" <c:if test="${item.getTaskStatus() == 2 }">selected</c:if>>Canceled</option>

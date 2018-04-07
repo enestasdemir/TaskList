@@ -7,50 +7,50 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>User Login</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	crossorigin="anonymous"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	crossorigin="anonymous"></script>
+<c:import url="/css"></c:import>
+<c:import url="/js"></c:import>
 </head>
-<body style="background-color:#d9dddd">
+<body style="background-color: #d9dddd">
 	<div class="container">
+		<c:import url="/navbar"></c:import>
 		<div class="row">
-		<div class="col-sm-4"></div>
+			<div class="col-sm-4"></div>
 			<div class="col-sm-4" align="center" style="margin-top: 25px">
+				<c:if test="${ not empty error }">
+					<div class="alert alert-danger alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">×</button>
+						<h4>
+							<i class="icon fa fa-ban"></i>Alert
+						</h4>${ error }
+					</div>
+				</c:if>
 				<div class="card" style="width: 18rem;">
 					<div class="card-body" align="left">
 						<h5 class="card-title">Login</h5>
 						<form action='<s:url value="/login"></s:url>' method="post">
 							<div class="form-group">
-								<label for="user_mail">User Email</label> <input
-									type="email" class="form-control" id="user_mail" name="userMail"
+								<label for="user_mail">User Email</label> <input type="email"
+									class="form-control" id="user_mail" name="userMail"
 									placeholder="Enter email">
 							</div>
 							<div class="form-group">
 								<label for="user_password">Password</label> <input
-									type="password" class="form-control" id="user_password" name="userPassword"
-									placeholder="Password">
+									type="password" class="form-control" id="user_password"
+									name="userPassword" placeholder="Password">
 							</div>
 							<button type="submit" class="btn btn-primary">Login</button>
 						</form>
 					</div>
-				</div><div style="margin-top: 20px">
-				<a href='<s:url value="/register"></s:url>'>Create a New Account</a>
+				</div>
+				<div style="margin-top: 20px">
+					<a href='<s:url value="/register"></s:url>'><button
+							type="button" class="btn btn-primary btn-sm">Create a
+							New Account</button></a>
+				</div>
+				<div class="col-sm-4"></div>
 			</div>
-			<div class="col-sm-4"></div>
 		</div>
-	</div>
 	</div>
 </body>
 </html>

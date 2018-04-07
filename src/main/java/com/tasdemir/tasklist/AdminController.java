@@ -30,13 +30,13 @@ public class AdminController {
 	SessionFactory sf = HibernateUtil.getSessionFactory();
 
 	// User list page
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/userlist", method = RequestMethod.GET)
 	public String userList(Model model, HttpServletRequest req) {
 		boolean log = req.getSession().getAttribute("id") != null;
 		User user = (User) req.getSession().getAttribute("user");
 		int role = user.getUserRole();
 		if (log && role == 1) {
-			// int id = (Integer) req.getSession().getAttribute("id"); // Standart user ID
 			Session sesi = sf.openSession();
 			List<User> userarr = new ArrayList<User>();
 			try {
@@ -51,17 +51,20 @@ public class AdminController {
 			return "redirect:/";
 		}
 	}
-	
-	int uid;	// Selected user id
+
+	int uid; // Selected user id
 
 	// User's task list page
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/tasklist/{id}", method = RequestMethod.GET)
 	public String usersTaskListPage(@PathVariable Integer id, Model model, HttpServletRequest req) {
 		uid = id;
-		User user = (User) req.getSession().getAttribute("user");
-		
+		model.addAttribute("uid", uid); // For filter page activate
+		model.addAttribute("filter", 2); // Filter dropdown menu activate
 		boolean log = req.getSession().getAttribute("id") != null;
-		if (log) {
+		User user = (User) req.getSession().getAttribute("user");
+		int role = user.getUserRole();
+		if (log && role == 1) {
 			Session sesi = sf.openSession();
 			List<Task> taskarr = new ArrayList<Task>();
 			try {
@@ -76,33 +79,35 @@ public class AdminController {
 			return "redirect:/";
 		}
 	}
-	
-	int tid;	// Selected task id
-	
+
+	int tid; // Selected task id
+
 	// Task edit page
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/taskedit/{id}", method = RequestMethod.GET)
 	public String adminTaskEditPage(@PathVariable Integer id, Model model, HttpServletRequest req) {
 		tid = id;
+		boolean log = req.getSession().getAttribute("id") != null;
 		User user = (User) req.getSession().getAttribute("user");
-
-		Session sesi = sf.openSession();
-		List<Task> ls = sesi.createQuery("from Task where taskId = '" + id + "' ").setMaxResults(1).list();
-		if (ls.get(0).getTaskUserId() != user.getUserId()) {
-			model.addAttribute("error", "User is not validated!");
-		} else {
+		int role = user.getUserRole();
+		if (log && role == 1) {
+			Session sesi = sf.openSession();
+			List<Task> ls = sesi.createQuery("from Task where taskId = '" + id + "' ").setMaxResults(1).list();
 			model.addAttribute("ls", ls);
 			sesi.close();
+		} else {
+			model.addAttribute("error", "User is not validated!");
+			return "redirect:/";
 		}
 		return Utils.loginControl(req, "redirect:/", "admin/taskedit");
 	}
-	
+
 	// Task edit action
 	@RequestMapping(value = "/updatetask", method = RequestMethod.POST)
 	public String updateTask(Task task, HttpServletRequest req, @RequestParam String startDate,
 			@RequestParam String dueDate) {
 		boolean log = req.getSession().getAttribute("id") != null;
 		if (log) {
-
 			// Date formatter (String -> Date)
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date sd = new Date();
@@ -126,6 +131,33 @@ public class AdminController {
 			sesi.close();
 
 			return "redirect:/admin/tasklist/" + uid;
+		} else {
+			return "redirect:/";
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/tasklist/{id}/{fid}", method = RequestMethod.GET)
+	public String taskFilter(@PathVariable Integer id, @PathVariable Integer fid, HttpServletRequest req, Model model) {
+		uid = id;
+		model.addAttribute("uid", uid); // For filter page activate
+		model.addAttribute("filter", 2); // Filter dropdown menu activate
+		boolean log = req.getSession().getAttribute("id") != null;
+		User user = (User) req.getSession().getAttribute("user");
+		int role = user.getUserRole();
+		if (log && role == 1) {
+			Session sesi = sf.openSession();
+			List<Task> ftaskarr = new ArrayList<Task>();
+			try {
+				ftaskarr = sesi
+						.createQuery("from Task where task_user_id = '" + uid + "' and task_status = '" + fid + "'")
+						.list(); // List filling
+				model.addAttribute("ls", ftaskarr);
+			} catch (Exception e) {
+				System.err.println("Databse error: " + e);
+			}
+
+			return "tasklist";
 		} else {
 			return "redirect:/";
 		}

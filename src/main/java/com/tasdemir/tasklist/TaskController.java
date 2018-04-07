@@ -30,8 +30,10 @@ public class TaskController {
 	SessionFactory sf = HibernateUtil.getSessionFactory();
 
 	// Task list page
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/tasklist", method = RequestMethod.GET)
 	public String taskList(Model model, HttpServletRequest req) {
+		model.addAttribute("filter", 1);	// Filter dropdown menu activate
 		boolean log = req.getSession().getAttribute("id") != null;
 		if (log) {
 			int id = (Integer) req.getSession().getAttribute("id"); // Standart user ID
@@ -52,7 +54,15 @@ public class TaskController {
 
 	// Task add page
 	@RequestMapping(value = "/taskadd", method = RequestMethod.GET)
-	public String taskAddPage(HttpServletRequest req) {
+	public String taskAddPage(HttpServletRequest req, Model model) {
+		// Check errors
+		boolean error = req.getSession().getAttribute("error") != null;
+		if (error) {
+			String err = "" + req.getSession().getAttribute("error"); // Convert error object to string
+			model.addAttribute("error", err); // Set error model
+			req.getSession().removeAttribute("error"); // Clear error object
+		}
+		
 		return Utils.loginControl(req, "redirect:/", "taskadd");
 	}
 
@@ -60,6 +70,13 @@ public class TaskController {
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public String addTask(Task task, HttpServletRequest req, @RequestParam String startDate,
 			@RequestParam String dueDate) {
+		// Check required fields
+		if (task.getTaskName().equals("") || task.getTaskDescription().equals("") || startDate.equals("")
+				|| dueDate.equals("")) {
+			req.getSession().setAttribute("error", "All fields are required!");
+			return "redirect:/taskadd";
+		}
+		
 		boolean log = req.getSession().getAttribute("id") != null;
 		if (log) {
 			int id = (Integer) req.getSession().getAttribute("id"); // Standart user ID
@@ -91,10 +108,11 @@ public class TaskController {
 			return "redirect:/";
 		}
 	}
-	
+
 	int tid; // Selected task id
 
 	// Task edit page
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/taskedit/{id}", method = RequestMethod.GET)
 	public String taskEditPage(@PathVariable Integer id, Model model, HttpServletRequest req) {
 		tid = id;
@@ -106,12 +124,11 @@ public class TaskController {
 			model.addAttribute("error", "User is not validated!");
 		} else {
 			model.addAttribute("ls", ls);
-			System.out.println("tid " + tid);
 			sesi.close();
 		}
 		return Utils.loginControl(req, "redirect:/", "taskedit");
 	}
-	
+
 	// Task edit action
 	@RequestMapping(value = "/updatetask", method = RequestMethod.POST)
 	public String updateTask(Task task, HttpServletRequest req, @RequestParam String startDate,
@@ -162,6 +179,30 @@ public class TaskController {
 			return id;
 		} catch (Exception e) {
 			return "";
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/tasklist/{fid}", method = RequestMethod.GET)
+	public String taskFilter(@PathVariable Integer fid, HttpServletRequest req, Model model) {
+		model.addAttribute("filter", 1);	// Filter dropdown menu activate
+		boolean log = req.getSession().getAttribute("id") != null;
+		if (log) {
+			int id = (Integer) req.getSession().getAttribute("id"); // Standart user ID
+			Session sesi = sf.openSession();
+			List<Task> ftaskarr = new ArrayList<Task>();
+			try {
+				ftaskarr = sesi
+						.createQuery("from Task where task_user_id = '" + id + "' and task_status = '" + fid + "'")
+						.list(); // List filling
+				model.addAttribute("ls", ftaskarr);
+			} catch (Exception e) {
+				System.err.println("Databse error: " + e);
+			}
+
+			return "tasklist";
+		} else {
+			return "redirect:/";
 		}
 	}
 
