@@ -80,7 +80,7 @@ public class AdminController {
 				List<Task> taskarr = new ArrayList<Task>(); // Create a list for tasks
 				try {
 					// Task list filling
-					taskarr = sesi.createQuery("from Task where task_user_id = '" + uid + "'").list();
+					taskarr = sesi.createQuery("from Task where task_user_id = '" + uid + "' order by task_id desc").list();
 					model.addAttribute("ls", taskarr); // Create a model for the task list
 				} catch (Exception e) {
 					System.err.println("Database error (Task list filling): " + e);
@@ -189,7 +189,7 @@ public class AdminController {
 				try {
 					// Fill the list with filtered tasks
 					ftaskarr = sesi
-							.createQuery("from Task where task_user_id = '" + uid + "' and task_status = '" + fid + "'")
+							.createQuery("from Task where task_user_id = '" + uid + "' and task_status = '" + fid + "'  order by task_id desc")
 							.list();
 					model.addAttribute("ls", ftaskarr); // Create a model for the filtered task list
 				} catch (Exception e) {

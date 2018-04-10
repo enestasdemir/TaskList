@@ -11,7 +11,7 @@
  Target Server Version : 100129
  File Encoding         : 65001
 
- Date: 07/04/2018 19:14:13
+ Date: 10/04/2018 19:42:07
 */
 
 SET NAMES utf8mb4;
@@ -66,7 +66,7 @@ CREATE TABLE `users`  (
   `user_register_date` date NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE,
   UNIQUE INDEX `user_mail`(`user_mail`) USING BTREE COMMENT 'Login unique email'
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_turkish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_turkish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of users
@@ -82,5 +82,7 @@ INSERT INTO `users` VALUES (8, 'Hüssam', 'Durak', 'hussam_durak@mail.com', '123
 INSERT INTO `users` VALUES (9, 'Çetin', 'Meral', 'cetin_meral@mail.com', '12345', 0, '2018-04-05');
 INSERT INTO `users` VALUES (10, 'Emre', 'Göktuğ', 'emre_goktug@mail.com', '12345', 0, '2018-04-05');
 INSERT INTO `users` VALUES (11, 'Ülkü', 'Beşiktaş', 'ulku_besiktas@mail.com', '12345', 0, '2018-04-07');
+INSERT INTO `users` VALUES (12, 'Kemal', 'Işık', 'kemal_isik@mail.com', '12345', 0, '2018-04-07');
+INSERT INTO `users` VALUES (14, 'Özge', 'Çakır', 'ozge_cakir@mail.com', '12345', 0, '2018-04-07');
 
 SET FOREIGN_KEY_CHECKS = 1;
